@@ -41,40 +41,30 @@ para dois LEDs ligados e, em seguida, apenas um. Obs.: veja o vídeo associado a
 
 ## 🔧 Funcionalidades Implementadas:
 
-O código implementa diversas funcionalidades utilizando os recursos do RP2040, incluindo controlo de LEDs, gestão de tempo com alarms, deteção de botões com interrupções, e comunicação serial. O SDK do Pico oferece uma variedade de bibliotecas que facilitam a interação com o hardware, incluindo GPIOs, timers, e periféricos. As funcionalidades principais implementadas incluem:
+## Funcionalidades do Código
 
-•Controlo de LEDs via GPIO: O código inicializa e configura pinos GPIO como saídas para controlar LEDs. Especificamente, pinos GPIO 11, 12, e 13 são usados para controlar LEDs azul, vermelho e verde, respetivamente. A função gpio_put() é utilizada para ligar ou desligar os LEDs. O RP2040 permite conectar periféricos internos aos pinos GPIO ou controlá-los diretamente via software. Cada pino GPIO pode ser configurado para diversas funções, incluindo SPI, I2C, UART, PWM, ou como GPIO genérico. A função gpio_set_function() no SDK garante que o pad esteja configurado para a função desejada.
+1. Controlo de LEDs via GPIO:
+Configura pinos GPIO para controlar LEDs nos pinos 11, 12 e 13.
+Utiliza gpio_put() para ligar e desligar os LEDs.
 
-A função gpio_init() inicializa os GPIOs e a função gpio_set_dir(gpio, GPIO_OUT) define-os como saídas.
+2. Botão de Entrada e Interrupções:
+Usa o pino GPIO 5 para leitura do botão.
+Configura interrupção para detecção do botão pressionado com gpio_set_irq_enabled_with_callback().
 
-A função gpio_put(gpio, value) é utilizada para ligar (1) ou desligar (0) os LEDs.
+3. Alarms e Callbacks:
+Utiliza add_alarm_in_ms() para configurar callbacks que controlam a sequência de desligamento dos LEDs.
 
-•Botão de Entrada e Interrupções: O código configura um pino GPIO como entrada para detetar o acionamento de um botão. Especificamente, o pino GPIO 5 é usado para ler o estado do botão. A função gpio_pull_up(BUTTON) ativa o pull-up interno para evitar leituras flutuantes quando o botão não está pressionado. Uma interrupção é configurada para ser acionada quando o botão é pressionado (queda na borda) usando gpio_set_irq_enabled_with_callback(). Quando a interrupção ocorre, a função button_callback() é chamada. Os pinos GPIO podem ser usados para acionar interrupções, permitindo uma resposta assíncrona a eventos.
-◦
-A função gpio_init() inicializa o GPIO e a função gpio_set_dir(BUTTON, GPIO_IN) define-o como entrada.
-◦
-A função gpio_pull_up(BUTTON) ativa o pull-up interno para evitar leituras flutuantes quando o botão não está pressionado.
-•
-Alarms e Callbacks: O código utiliza alarms e callbacks para controlar a sequência de desligamento dos LEDs. A função add_alarm_in_ms() configura um alarm para chamar uma função de callback após um certo número de milissegundos. As funções turn_off_blue_callback(), turn_off_red_callback(), e turn_off_green_callback() são callbacks que são executados após um tempo específico definido pelo alarm. A biblioteca pico_time oferece funções para criar timestamps, colocar o microcontrolador em sleep, usar alarms, e usar temporizadores repetitivos.
-◦
-A função add_alarm_in_ms() configura um alarm para chamar uma função de callback após um certo número de milissegundos.
+4. Controlo de Fluxo e Estado:
+Loop while(1) para execução contínua do programa.
+Usa sleep_ms(100) para pausas no loop principal.
 
-turn_off_blue_callback() desliga o LED azul e configura um alarm para desligar o LED vermelho após 3000 ms, chamando turn_off_red_callback().
+5. Debounce do Botão:
+Função debounce_button() para lidar com o efeito de debounce do botão.
 
-turn_off_red_callback() desliga o LED vermelho e configura um alarm para desligar o LED verde após 3000 ms, chamando turn_off_green_callback().
+6. Comunicação Serial:
+Inicialização da comunicação serial com stdio_init_all() para exibir mensagens no terminal.
 
-turn_off_green_callback() desliga o LED verde e redefine a flag led_sequence_active para false, permitindo que a sequência seja iniciada novamente.
-•
-Controlo de Fluxo e Estado: O programa utiliza um loop while(1) para executar indefinidamente. A função sleep_ms(100) pausa o loop principal por 100 milissegundos. Uma flag volátil led_sequence_active é usada para controlar se a sequência de LEDs está ativa, impedindo múltiplas ativações da sequência durante a execução da mesma.
 
-O loop while(1) garante que o código continue a executar indefinidamente.
-◦
-A função sleep_ms(100) pausa o loop principal por 100 milissegundos.
-•
-Debounce do Botão: O código inclui uma função debounce_button() para tratar o efeito de debounce do botão, embora não seja utilizada no callback. A função utiliza sleep_ms(50) para aguardar um curto período de tempo e verificar o estado do botão, retornando true apenas se o botão permanecer pressionado após o atraso.
-•
-Comunicação Serial: Embora não haja código de comunicação serial diretamente neste código, a função stdio_init_all() é incluída, que inicializa a comunicação serial, permitindo que o programa exiba mensagens através do terminal. A biblioteca pico_stdio oferece suporte para entrada e saída através de UART, USB ou semi-hosting.
-Em resumo, o código demonstra o uso de GPIOs para controlo de LEDs e deteção de botões, alarms e callbacks para temporização e sequências de LEDs, interrupções para resposta a eventos, e o uso de funções de sleep para pausa na execução. O SDK do Pico oferece diversas bibliotecas para facilitar a interação com o hardware e criar aplicações complexas.
 ## 💻 Desenvolvedores
  
 <table>
