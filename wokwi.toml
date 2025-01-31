@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = 'build/tarefa_atividade2_BL.hex'
+elf = 'build/tarefa_atividade2_BL.elf'
