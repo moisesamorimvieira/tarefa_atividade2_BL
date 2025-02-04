@@ -22,21 +22,21 @@
       "id": "r1",
       "top": 205.55,
       "left": -105.6,
-      "attrs": { "value": "1000" }
+      "attrs": { "value": "330" }
     },
     {
       "type": "wokwi-resistor",
       "id": "r2",
       "top": 224.75,
       "left": -105.6,
-      "attrs": { "value": "1000" }
+      "attrs": { "value": "330" }
     },
     {
       "type": "wokwi-resistor",
       "id": "r3",
       "top": 243.95,
       "left": -105.6,
-      "attrs": { "value": "1000" }
+      "attrs": { "value": "330" }
     },
     { "type": "wokwi-led", "id": "led1", "top": 34.8, "left": -169, "attrs": { "color": "blue" } },
     { "type": "wokwi-led", "id": "led2", "top": 82.8, "left": -169, "attrs": { "color": "red" } },
